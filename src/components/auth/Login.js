@@ -90,7 +90,7 @@ const LoginForm = (props) => {
             Submit
           </Button>
         </Form.Item>
-        <Link to='/' className='linkToRegister'>
+        <Link to='/register' className='linkToRegister'>
           Create new account
         </Link>
       </Form>

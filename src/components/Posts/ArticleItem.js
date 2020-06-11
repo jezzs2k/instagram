@@ -17,7 +17,7 @@ const ArticleItem = ({
 }) => {
   const authContext = useContext(AuthContext);
 
-  const { user } = authContext;
+  const { user, isAuthenticated } = authContext;
 
   const {
     title,
@@ -87,13 +87,17 @@ const ArticleItem = ({
             More
           </p>
         )}
-        <div className='action'>
-          <HeartOutlined
-            className={`icon ${isEnjoy && 'color'}`}
-            onClick={clickLoveHandle}
-          />
-          <CommentOutlined className='icon' />
-        </div>
+
+        {isAuthenticated && (
+          <div className='action'>
+            <HeartOutlined
+              className={`icon ${isEnjoy && 'color'}`}
+              onClick={clickLoveHandle}
+            />
+            <CommentOutlined className='icon' />
+          </div>
+        )}
+
         <div className='total-heart'>
           {hearts && hearts.length > 0 && <span>{hearts.length} Heart</span>}
         </div>

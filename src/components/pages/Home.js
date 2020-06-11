@@ -3,7 +3,7 @@ import React, { useEffect, useContext } from 'react';
 import Articles from '../Posts/Arcitles';
 import AuthContext from '../../context//auth/authContext';
 
-const Home = () => {
+const Home = ({ history }) => {
   const authContext = useContext(AuthContext);
 
   const { loadUser } = authContext;
@@ -11,6 +11,8 @@ const Home = () => {
   useEffect(() => {
     if (localStorage.token) {
       loadUser();
+    } else {
+      history.push('/login');
     }
 
     // eslint-disable-next-line

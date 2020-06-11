@@ -122,7 +122,7 @@ const RegisterForm = (props) => {
           </Button>
         </Form.Item>
         <Link to='/' className='linkToRegister'>
-          Create new account
+          Login
         </Link>
       </Form>
     </div>
