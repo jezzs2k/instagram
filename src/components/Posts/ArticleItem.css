@@ -1,0 +1,89 @@
+.article {
+  margin: auto;
+  max-width: 500px;
+  margin-top: 20px;
+}
+
+.article .avatar-style {
+  margin: 0;
+  padding: 0;
+}
+
+.article .content .ant-card-meta-title {
+  white-space: normal !important;
+}
+
+.article .more-title {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.article .more-title:hover {
+  color: cornflowerblue;
+}
+
+.article .ant-card-bordered:first-child {
+  border-bottom: none;
+}
+
+.article .ant-card-body {
+  padding: 10px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.article .comment {
+  border-top: 1px solid #f0f0f0;
+}
+
+.article .comment-form {
+  display: flex;
+}
+
+.article .comment-form-child {
+  height: 30px;
+  border-radius: 20px;
+}
+
+.article .action .icon {
+  font-size: 1.5rem;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.article .action .icon.color {
+  color: #eb2f96;
+}
+
+.article .total-heart span {
+  font-weight: 600;
+  color: black;
+}
+
+.article .comment .comment-item {
+  display: flex;
+}
+
+.article .comment .comment-item .name {
+  font-size: 1em;
+  padding: 0;
+  margin: 0;
+}
+
+.article .comment .comment-item .text {
+  margin-left: 10px;
+}
+
+.article .action-article .delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: white;
+  cursor: pointer;
+  font-weight: 600;
+  color: #fa2b2b;
+  font-size: 1rem;
+}
+
+.article .action-article .delete-btn:hover {
+  text-decoration: underline;
+}

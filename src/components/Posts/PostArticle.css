@@ -1,0 +1,27 @@
+.Post_Article {
+  margin-top: 20px;
+}
+
+.preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview .article-img {
+  max-width: 500px;
+}
+
+.preview-btn {
+  margin-top: 5px;
+  border: 1px solid #f0f0f0;
+  padding: 5px;
+  background: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.preview-btn:hover {
+  border: 1px solid gray;
+  color: black;
+}

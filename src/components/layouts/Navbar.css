@@ -1,0 +1,12 @@
+.MuiAppBar-colorPrimary {
+  background: white !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid #f0f0f0;
+  color: black;
+}
+
+@media only screen and (min-width: 900px) {
+  .MuiToolbar-gutters {
+    padding: 0 100px !important;
+  }
+}
