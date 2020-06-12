@@ -3,7 +3,13 @@ import { EllipsisOutlined } from '@ant-design/icons';
 
 import './CommentItem.css';
 
-const CommentItem = ({ comment, editComment, deleteComment, articleId }) => {
+const CommentItem = ({
+  comment,
+  editComment,
+  deleteComment,
+  articleId,
+  userId,
+}) => {
   const [isOpen, setOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -15,7 +21,7 @@ const CommentItem = ({ comment, editComment, deleteComment, articleId }) => {
       <p className='text'>{comment.text}</p>
       <div className='action'>
         <EllipsisOutlined className='icon-action' onClick={handleOpenModal} />
-        {isOpen && (
+        {userId === comment.userId && isOpen && (
           <div className='action-item'>
             <p
               onClick={() => {

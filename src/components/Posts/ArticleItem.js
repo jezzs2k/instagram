@@ -117,6 +117,7 @@ const ArticleItem = ({
                 comment={item}
                 editComment={editComment}
                 deleteComment={deleteComment}
+                userId={user.id}
                 articleId={id}
               />
             ))}
@@ -133,7 +134,7 @@ const ArticleItem = ({
             shape='round'
             onClick={() =>
               commentHandle(
-                { text: comment, namePosted: user.nickname },
+                { text: comment, namePosted: user.nickname, userId: user.id },
                 article.id
               )
             }>
