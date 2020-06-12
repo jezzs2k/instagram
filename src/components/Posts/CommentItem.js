@@ -15,13 +15,16 @@ const CommentItem = ({
   const handleOpenModal = () => {
     setOpen(!isOpen);
   };
+
   return (
     <div className='comment-item'>
       <h2 className='name'>{comment.namePosted}</h2>
       <p className='text'>{comment.text}</p>
       <div className='action'>
-        <EllipsisOutlined className='icon-action' onClick={handleOpenModal} />
-        {userId === comment.userId && isOpen && (
+        {userId === comment.userId && (
+          <EllipsisOutlined className='icon-action' onClick={handleOpenModal} />
+        )}
+        {isOpen && (
           <div className='action-item'>
             <p
               onClick={() => {

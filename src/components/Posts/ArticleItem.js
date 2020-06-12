@@ -117,7 +117,7 @@ const ArticleItem = ({
                 comment={item}
                 editComment={editComment}
                 deleteComment={deleteComment}
-                userId={user.id}
+                userId={user && user.id}
                 articleId={id}
               />
             ))}
