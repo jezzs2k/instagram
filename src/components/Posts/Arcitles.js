@@ -12,6 +12,7 @@ const Articles = () => {
     deleteArticle,
     commentFun,
     handleLikeButton,
+    deleteComment,
   } = articleContext;
 
   useEffect(() => {
@@ -29,6 +30,7 @@ const Articles = () => {
             deleteArticle={deleteArticle}
             commentFun={commentFun}
             handleLikeButton={handleLikeButton}
+            deleteComment={deleteComment}
             key={article.id}
           />
         ))}

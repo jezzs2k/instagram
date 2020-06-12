@@ -80,6 +80,32 @@ const ArticleState = (props) => {
     }
   };
 
+  const deleteComment = async (articleId, commentId) => {
+    try {
+      debugger;
+      const article = await (
+        await db.collection('articles').doc(articleId).get()
+      ).data();
+
+      const comments = article.comments;
+
+      const newComments = comments.filter((item) => item.id !== commentId);
+
+      await db
+        .collection('articles')
+        .doc(articleId)
+        .set({
+          ...article,
+          comments: [...newComments],
+        });
+    } catch (error) {
+      dispatch({
+        type: ERROR,
+        payload: { error },
+      });
+    }
+  };
+
   const commentFun = async (data, idDocument) => {
     try {
       setLoading();
@@ -92,7 +118,10 @@ const ArticleState = (props) => {
         .doc(idDocument)
         .set({
           ...dataArticle,
-          comments: [data, ...dataArticle.comments],
+          comments: [
+            { ...data, id: shortid.generate() },
+            ...dataArticle.comments,
+          ],
         });
     } catch (error) {
       dispatch({
@@ -150,6 +179,7 @@ const ArticleState = (props) => {
         deleteArticle,
         commentFun,
         handleLikeButton,
+        deleteComment,
       }}>
       {props.children}
     </ArticleContext.Provider>

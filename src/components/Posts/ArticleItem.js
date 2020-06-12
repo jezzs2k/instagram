@@ -4,6 +4,8 @@ import { HeartOutlined, CommentOutlined } from '@ant-design/icons';
 
 import AuthContext from '../../context/auth/authContext';
 
+import CommentItem from './CommentItem';
+
 import './ArticleItem.css';
 
 const { Meta } = Card;
@@ -14,6 +16,7 @@ const ArticleItem = ({
   deleteArticle,
   commentFun,
   handleLikeButton,
+  deleteComment,
 }) => {
   const authContext = useContext(AuthContext);
 
@@ -66,6 +69,10 @@ const ArticleItem = ({
     commentFun(data, idDocument);
   };
 
+  const editComment = (comment) => {
+    setComment(comment);
+  };
+
   return (
     <div className='article'>
       <Card style={{ width: '100%' }} className='avatar-style'>
@@ -105,10 +112,13 @@ const ArticleItem = ({
           {comments &&
             comments.length > 0 &&
             comments.map((item, i) => (
-              <div className='comment-item' key={i}>
-                <h2 className='name'>{item.namePosted}</h2>
-                <p className='text'>{item.text}</p>
-              </div>
+              <CommentItem
+                key={i}
+                comment={item}
+                editComment={editComment}
+                deleteComment={deleteComment}
+                articleId={id}
+              />
             ))}
         </div>
         <div className='comment-form'>
