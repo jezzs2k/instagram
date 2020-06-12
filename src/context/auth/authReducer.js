@@ -46,11 +46,13 @@ export default (state, action) => {
         user: null,
       };
     case ERROR_AUTH:
+      console.log(action.payload);
       localStorage.removeItem('token');
       return {
         ...state,
         isAuthenticated: null,
         loading: false,
+        user: null,
         error: action.payload.error,
       };
     case LOADING:

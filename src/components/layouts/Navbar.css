@@ -4,6 +4,9 @@
   border-bottom: 1px solid #f0f0f0;
   color: black;
 }
+.MuiIconButton-root:hover {
+  background: none !important;
+}
 
 @media only screen and (min-width: 900px) {
   .MuiToolbar-gutters {

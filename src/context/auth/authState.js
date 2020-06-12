@@ -28,6 +28,7 @@ const AuthState = (props) => {
 
   const loadUser = async () => {
     try {
+      setLoading();
       const doc = await db.collection('users').doc(localStorage.token).get();
 
       dispatch({
@@ -76,7 +77,29 @@ const AuthState = (props) => {
   const register = async (data) => {
     try {
       setLoading();
+
+      const users = await db.collection('users').get();
+      const match = users.docs.filter((doc) => {
+        if (
+          doc.data().email === data.email ||
+          doc.data().nickname === data.nickname
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+
+      if (match.length > 0) {
+        throw new Error('Email or nickname is valid');
+      }
+
       const token = shortid.generate();
+
+      if (!('avatar' in data)) {
+        data = { ...data, avatar: 'https://picsum.photos/id/237/200/300' };
+      }
+
       await db
         .collection('users')
         .doc(token)
@@ -89,6 +112,31 @@ const AuthState = (props) => {
         type: REGISTER,
         payload: { token: token },
       });
+    } catch (error) {
+      dispatch({
+        type: ERROR_AUTH,
+        payload: { error },
+      });
+    }
+  };
+
+  const updateUser = async (data, idDocument) => {
+    try {
+      setLoading();
+      const user = await (
+        await db.collection('users').doc(idDocument).get()
+      ).data();
+
+      await db
+        .collection('users')
+        .doc(idDocument)
+        .set({
+          ...user,
+          avatar: data.avatar,
+          nickname: data.nickname,
+        });
+
+      loadUser();
     } catch (error) {
       dispatch({
         type: ERROR_AUTH,
@@ -123,6 +171,7 @@ const AuthState = (props) => {
         login,
         register,
         loadUser,
+        updateUser,
       }}>
       {props.children}
     </AuthContext.Provider>

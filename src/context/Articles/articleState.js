@@ -40,9 +40,9 @@ const ArticleState = (props) => {
   const createArticle = async (data) => {
     try {
       setLoading();
-
       const id = shortid.generate();
 
+      debugger;
       await db
         .collection('articles')
         .doc(id)

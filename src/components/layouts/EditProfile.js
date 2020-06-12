@@ -3,13 +3,7 @@ import { Form, Input, Button, Upload, Skeleton } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
 import { storage } from '../../firebase';
-
-import './PostArticle.css';
-
-import ArticleContext from '../../context/Articles/articleContext';
 import AuthContext from '../../context/auth/authContext';
-
-const { TextArea } = Input;
 
 const layout = {
   labelCol: {
@@ -28,11 +22,9 @@ const tailLayout = {
 };
 
 const ArticleItem = ({ history }) => {
-  const articleContext = useContext(ArticleContext);
   const authContext = useContext(AuthContext);
 
-  const { createArticle } = articleContext;
-  const { user } = authContext;
+  const { user, updateUser } = authContext;
 
   const [imageAsFile, setImageAsFile] = useState('');
   const [imageAsUrl, setImageAsUrl] = useState('');
@@ -48,7 +40,6 @@ const ArticleItem = ({ history }) => {
   };
 
   const handleFireBaseUpload = (e) => {
-    // e.preventDefault();
     console.log('start of upload');
     if (imageAsFile === '') {
       console.error(`Not an image, the image file is a ${typeof imageAsFile}`);
@@ -78,21 +69,18 @@ const ArticleItem = ({ history }) => {
     );
   };
 
-  const [comment, setComment] = useState('');
-  const onChange = (e) => {
-    setComment(e.target.value);
-  };
-
   const onFinish = (values) => {
-    createArticle({
-      title: comment,
-      image: imageAsUrl,
-      postedNickName: user.nickname,
-      postedAvatar: user.avatar,
-      userId: user.id,
-    });
+    let nickname = values.text === '' ? user.nickname : values.text;
+    let avatar = imageAsUrl === '' ? user.avatar : imageAsUrl;
+    updateUser(
+      {
+        nickname: nickname,
+        avatar: avatar,
+      },
+      user.id
+    );
 
-    history.push('/');
+    history.push('/user');
     console.log('Success:', values);
   };
 
@@ -111,16 +99,10 @@ const ArticleItem = ({ history }) => {
         }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}>
-        <Form.Item label='Your Status'>
-          <TextArea
-            className='state-user'
-            placeholder='Status ... '
-            allowClear
-            value={comment}
-            onChange={onChange}
-          />
+        <Form.Item label='NickName' name='text'>
+          <Input />
         </Form.Item>
-        <Form.Item label='Image' onClick={handleUpload}>
+        <Form.Item label='Avatar' onClick={handleUpload}>
           <Upload name='file' onChange={handleImageAsFile}>
             <Button>
               <UploadOutlined /> Click to upload
@@ -136,16 +118,9 @@ const ArticleItem = ({ history }) => {
             ))}
         </Form.Item>
         <Form.Item {...tailLayout}>
-          {skeletonState &&
-            (imageAsUrl !== '' ? (
-              <Button type='primary' htmlType='submit'>
-                Submit
-              </Button>
-            ) : (
-              <Button type='primary' htmlType='submit' disabled>
-                Submit
-              </Button>
-            ))}
+          <Button type='primary' htmlType='submit'>
+            Submit
+          </Button>
         </Form.Item>
       </Form>
     </div>

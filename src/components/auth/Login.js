@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
+import React, { useContext, useEffect, Fragment } from 'react';
+import { Form, Input, Button, Checkbox, Alert } from 'antd';
 import { Link } from 'react-router-dom';
 
 import './Login.css';
@@ -24,7 +24,7 @@ const tailLayout = {
 const LoginForm = (props) => {
   const authContext = useContext(AuthContext);
 
-  const { login, isAuthenticated } = authContext;
+  let { login, isAuthenticated, error } = authContext;
   const onFinish = (values) => {
     login(values);
     console.log('Success:', values);
@@ -44,57 +44,62 @@ const LoginForm = (props) => {
   }, [isAuthenticated]);
 
   return (
-    <div className='login'>
-      <div className='backHome'>
-        <Link to='/'>Back to Home</Link>
+    <Fragment>
+      {error && (
+        <Alert message={error.message} className='alert-dev' type='error' />
+      )}
+      <div className='login'>
+        <div className='backHome'>
+          <Link to='/'>Back to Home</Link>
+        </div>
+        <h2 className='title'>LOGIN</h2>
+        <Form
+          {...layout}
+          name='basic'
+          initialValues={{
+            remember: true,
+          }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}>
+          <Form.Item
+            label='Email'
+            name='email'
+            rules={[
+              {
+                required: true,
+                message: 'Please input your email!',
+              },
+            ]}>
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label='Password'
+            name='password'
+            rules={[
+              {
+                required: true,
+                message: 'Please input your password!',
+              },
+            ]}>
+            <Input.Password />
+          </Form.Item>
+
+          <Form.Item {...tailLayout} name='remember' valuePropName='checked'>
+            <Checkbox>Remember me</Checkbox>
+          </Form.Item>
+
+          <Form.Item {...tailLayout}>
+            <Button type='primary' htmlType='submit'>
+              Submit
+            </Button>
+          </Form.Item>
+          <Link to='/register' className='linkToRegister'>
+            Create new account
+          </Link>
+        </Form>
       </div>
-      <h2 className='title'>LOGIN</h2>
-      <Form
-        {...layout}
-        name='basic'
-        initialValues={{
-          remember: true,
-        }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}>
-        <Form.Item
-          label='Email'
-          name='email'
-          rules={[
-            {
-              required: true,
-              message: 'Please input your email!',
-            },
-          ]}>
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label='Password'
-          name='password'
-          rules={[
-            {
-              required: true,
-              message: 'Please input your password!',
-            },
-          ]}>
-          <Input.Password />
-        </Form.Item>
-
-        <Form.Item {...tailLayout} name='remember' valuePropName='checked'>
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
-
-        <Form.Item {...tailLayout}>
-          <Button type='primary' htmlType='submit'>
-            Submit
-          </Button>
-        </Form.Item>
-        <Link to='/register' className='linkToRegister'>
-          Create new account
-        </Link>
-      </Form>
-    </div>
+    </Fragment>
   );
 };
 
